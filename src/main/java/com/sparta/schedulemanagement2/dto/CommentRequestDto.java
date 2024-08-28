@@ -1,0 +1,27 @@
+package com.sparta.schedulemanagement2.dto;
+
+import lombok.Getter;
+import lombok.Setter;
+
+import java.util.Date;
+
+@Getter
+@Setter
+public class CommentRequestDto {
+    private Long id;
+    private Long schedule_id;
+    private String comment;
+    private String username;
+    private Date date;
+    private Date fix_date;
+
+    public CommentRequestDto(Long id, Long schedule_id, String comment, String username, Date date, Date fix_date) {
+        this.id = id;
+        this.schedule_id = schedule_id;
+        this.comment = comment;
+        this.username = username;
+        this.date = date;
+        this.fix_date = fix_date;
+    }
+
+}

@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Getter
@@ -35,6 +36,9 @@ public class Schedule {
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date fix_date;
+
+    @OneToMany(mappedBy="schedule")
+    private List<Comment> comments;
 
 
 }
