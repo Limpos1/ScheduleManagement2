@@ -23,6 +23,17 @@ public class ScheduleController {
         return scheduleService.registschedule(req);
     }
 
+    @PostMapping("/memberregist")
+    public String memberregist(Long schedule_id, Long owner_id, Long member_id){
+        try{
+            scheduleService.memberregist(schedule_id, owner_id, member_id);
+        }catch(Exception e){
+            return e.getMessage();
+        }
+
+        return "success";
+    }
+
     //일정 단건 조회
     @GetMapping("/getone")
     public ResponseDto getschedule(RequestDto req){

@@ -22,8 +22,8 @@ public class Schedule {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name="username", nullable = false, length = 20)
-    private String username;
+    @Column(name="userid", nullable = false)
+    private Long userid;
 
     @Column(name="title", nullable = false, length = 45)
     private String title;
@@ -42,6 +42,9 @@ public class Schedule {
     @OneToMany(mappedBy="schedule",cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore // 페이지 출력시 무한 순환문제를 해결하기 위함
     private List<Comment> comments;
+
+    @OneToMany(mappedBy="schedule")
+    private List<UserSchedule> user_schedules;
 
 
 }
