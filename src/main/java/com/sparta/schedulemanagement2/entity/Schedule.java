@@ -39,7 +39,7 @@ public class Schedule {
     @Column(name="fix_date")
     private Date fixdate;
 
-    @OneToMany(mappedBy="schedule")
+    @OneToMany(mappedBy="schedule",cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore // 페이지 출력시 무한 순환문제를 해결하기 위함
     private List<Comment> comments;
 

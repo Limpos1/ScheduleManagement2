@@ -39,4 +39,9 @@ public class ScheduleController {
     public Page<ResponseDto> getschedulepage(@RequestParam int pagenumber, @RequestParam(defaultValue="10") int size){
         return scheduleService.pageschedule(pagenumber, size);
     }
+
+    @DeleteMapping("/delete")
+    public void deleteschedule(RequestDto req){
+        scheduleService.deleteschedule(req);
+    }
 }

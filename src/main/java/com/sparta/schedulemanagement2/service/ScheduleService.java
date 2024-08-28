@@ -82,4 +82,9 @@ public class ScheduleService {
 
         return schedules;
     }
+
+    public void deleteschedule(RequestDto req) {
+        Schedule s = scheduleRepository.findById(req.getId()).orElseThrow(()->new RuntimeException("존재하지 않는 일정입니다."));
+        scheduleRepository.delete(s);
+    }
 }
