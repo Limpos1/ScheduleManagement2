@@ -2,8 +2,10 @@ package com.sparta.schedulemanagement2.controller;
 
 import com.sparta.schedulemanagement2.dto.RequestDto;
 import com.sparta.schedulemanagement2.dto.ResponseDto;
+import com.sparta.schedulemanagement2.entity.Schedule;
 import com.sparta.schedulemanagement2.service.ScheduleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -31,5 +33,10 @@ public class ScheduleController {
     @PutMapping("/modify")
     public ResponseDto modifyschedule(RequestDto req){
         return scheduleService.modifyschedule(req);
+    }
+
+    @GetMapping("/page")
+    public Page<ResponseDto> getschedulepage(@RequestParam int pagenumber, @RequestParam(defaultValue="10") int size){
+        return scheduleService.pageschedule(pagenumber, size);
     }
 }

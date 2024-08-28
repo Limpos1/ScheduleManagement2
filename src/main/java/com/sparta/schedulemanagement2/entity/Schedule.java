@@ -1,5 +1,6 @@
 package com.sparta.schedulemanagement2.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -35,9 +36,11 @@ public class Schedule {
     private Date date;
 
     @Temporal(TemporalType.TIMESTAMP)
-    private Date fix_date;
+    @Column(name="fix_date")
+    private Date fixdate;
 
     @OneToMany(mappedBy="schedule")
+    @JsonIgnore // 페이지 출력시 무한 순환문제를 해결하기 위함
     private List<Comment> comments;
 
 

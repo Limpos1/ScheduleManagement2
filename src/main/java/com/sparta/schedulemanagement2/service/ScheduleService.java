@@ -6,9 +6,14 @@ import com.sparta.schedulemanagement2.dto.ResponseDto;
 import com.sparta.schedulemanagement2.entity.Schedule;
 import com.sparta.schedulemanagement2.repository.ScheduleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -24,10 +29,10 @@ public class ScheduleService {
         s.setTitle(requestDto.getTitle());
         s.setContents(requestDto.getContents());
         s.setDate(date);
-        s.setFix_date(date);
+        s.setFixdate(date);
 
         s = scheduleRepository.save(s);
-        ResponseDto r = new ResponseDto(s.getUsername(),s.getTitle(),s.getContents(),s.getDate(),s.getFix_date());
+        ResponseDto r = new ResponseDto(s.getUsername(),s.getTitle(),s.getContents(),s.getDate(),s.getFixdate());
 
         return r;
 
@@ -43,7 +48,7 @@ public class ScheduleService {
         else{
             throw new RuntimeException("해당 일정은 없습니다.");
         }
-        ResponseDto res = new ResponseDto(schedule.getUsername(),schedule.getTitle(),schedule.getContents(),schedule.getDate(),schedule.getFix_date());
+        ResponseDto res = new ResponseDto(schedule.getUsername(),schedule.getTitle(),schedule.getContents(),schedule.getDate(),schedule.getFixdate());
         return res;
     }
 
@@ -56,7 +61,7 @@ public class ScheduleService {
             schedule = s.get();
             schedule.setTitle(req.getTitle());
             schedule.setContents(req.getContents());
-            schedule.setFix_date(date);
+            schedule.setFixdate(date);
             schedule = scheduleRepository.save(schedule);
         }
         else{
@@ -67,9 +72,14 @@ public class ScheduleService {
         r.setUsername(schedule.getUsername());
         r.setTitle(schedule.getTitle());
         r.setContents(schedule.getContents());
-        r.setFix_date(schedule.getFix_date());
+        r.setFix_date(schedule.getFixdate());
 
         return r;
+    }
+    public Page<ResponseDto> pageschedule(int pagenumber, int size) {
+        Pageable pageable = PageRequest.of(pagenumber, size, Sort.by("fixdate").descending());
+        Page<ResponseDto> schedules = scheduleRepository.findAllSchedules(pageable);
 
+        return schedules;
     }
 }

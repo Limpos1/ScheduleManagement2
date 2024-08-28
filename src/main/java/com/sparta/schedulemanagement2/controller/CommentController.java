@@ -3,8 +3,10 @@ package com.sparta.schedulemanagement2.controller;
 import com.sparta.schedulemanagement2.dto.CommentRequestDto;
 import com.sparta.schedulemanagement2.dto.CommentResponseDto;
 import com.sparta.schedulemanagement2.dto.ResponseDto;
+import com.sparta.schedulemanagement2.entity.Schedule;
 import com.sparta.schedulemanagement2.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -39,4 +41,6 @@ public class CommentController {
     public String deletecomment(CommentRequestDto req){
         return commentService.deletecomment(req);
     }
+
+
 }
