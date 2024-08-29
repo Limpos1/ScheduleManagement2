@@ -3,6 +3,7 @@ package com.sparta.schedulemanagement2.service;
 
 import com.sparta.schedulemanagement2.dto.RequestDto;
 import com.sparta.schedulemanagement2.dto.ResponseDto;
+import com.sparta.schedulemanagement2.dto.UserDto;
 import com.sparta.schedulemanagement2.entity.Schedule;
 import com.sparta.schedulemanagement2.entity.User;
 import com.sparta.schedulemanagement2.entity.UserSchedule;
@@ -17,8 +18,10 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ScheduleService {
@@ -55,15 +58,27 @@ public class ScheduleService {
 
     public ResponseDto getschedule(RequestDto requestDto) {
         Schedule schedule;
+        ResponseDto res;
+        UserDto ud = new UserDto();
         Long id = requestDto.getId();
         Optional<Schedule> s = scheduleRepository.findById(id);
         if (s.isPresent()) {
             schedule = s.get();
+            res = new ResponseDto(schedule.getUserid(),schedule.getTitle(),schedule.getContents(),schedule.getDate(),schedule.getFixdate());
+
+            ud.setUs((((schedule.getUser_schedules()
+                    .stream()
+                    .map(UserSchedule::getUser)
+                    .collect(Collectors.toList())))));//스케줄 아이디 1을 가진 모든 유저ID를 반환받기
+
+            res.setMembers(ud.setting());
         }
+
         else{
             throw new RuntimeException("해당 일정은 없습니다.");
         }
-        ResponseDto res = new ResponseDto(schedule.getUserid(),schedule.getTitle(),schedule.getContents(),schedule.getDate(),schedule.getFixdate());
+
+
         return res;
     }
 
@@ -84,7 +99,7 @@ public class ScheduleService {
         }
         ResponseDto r = new ResponseDto();
         r.setId(schedule.getId());
-        r.setUsername(schedule.getUserid());
+        r.setUser_id(schedule.getUserid());
         r.setTitle(schedule.getTitle());
         r.setContents(schedule.getContents());
         r.setFix_date(schedule.getFixdate());

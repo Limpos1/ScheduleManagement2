@@ -47,4 +47,5 @@ public class Schedule {
     private List<UserSchedule> user_schedules;
 
 
+
 }
